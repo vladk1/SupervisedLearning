@@ -26,7 +26,8 @@ lte=ite;
 %set.
 
 % Need to use mldivide - but didn't make it to work!!
-wtr_est = inv(Xtr'*Xtr)*Xtr'*ytr;  %Estimate w based on the training set.
+% wtr_est = inv(Xtr'*Xtr)*Xtr'*ytr;  %Estimate w based on the training set.
+wtr_est = (Xtr'*Xtr) \ Xtr'*ytr; 
 
 % Using equation (3) compute the mean squared error on both the training
 % and test sets.
@@ -66,7 +67,8 @@ lte=ite;
 %set.
 
 % Need to use mldivide - but didn't make it to work!!
-wtr_est = inv(Xtr'*Xtr)*Xtr'*ytr;  %Estimate w based on the training set.
+% wtr_est = inv(Xtr'*Xtr)*Xtr'*ytr;  %Estimate w based on the training set.
+wtr_est = (Xtr'*Xtr) \ Xtr'*ytr; 
 
 % Using equation (3) compute the mean squared error on both the training
 % and test sets.
