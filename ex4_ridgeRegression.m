@@ -4,64 +4,44 @@ clc
 % for ? ranging from 10^?6 up to 10^3, and all powers of 10 in between. 
 % What are the training and test mean squared errors? 
 % Plot the training and test set errors as a function of ? (use a log scale for the ? axis).
+
 d = 10; %Dimension
-I = eye(d); % Identity matrix
 max_iteration_size = 200;
-[mean_square_error_train, mean_square_error_test] = deal(zeros(1,max_iteration_size));
 j  = -6 : 3; % from 10^?6 up to 10^3
+
+[mse_test_100, mse_test_10] = deal(zeros(max_iteration_size, numel(j)));
+[mse_train_100, mse_train_10] = deal(zeros(max_iteration_size, numel(j)));
+
 for idx = 1:numel(j)
     gamma=10^j(idx);
     for i=1:max_iteration_size
-        i_train=[100,10];  %Size 100 training and 10 size training 
-        i_test=500;  %Size 500 test 
-        Xte=randn(i_test,d);   %X is drawn from the standard normal distribution.
-        Xtr=randn(i_train(i),d);   %X is drawn from the standard normal distribution.
-        n_test=randn(i_test,1);   %n is drawn from the standard normal distribution.
-        n_train=randn(i_train(i),1);   %n is drawn from the standard normal distribution.
-        w_test=randn(d,1); % weighted vector= random weight vector w ? R10
-        w_train=randn(d,1); % weighted vector= random weight vector w ? R10
-        y_train=Xtr*w_train+n_train; %Calculate gamma for training data
-        y_test=Xte*w_test+n_test; %Calculate gamma for training data 
-        l_train=i_train(i);
-        l_test=i_test;
-
-        wtr_est = (Xtr'*Xtr + gamma*I) \ Xtr'*y_train;
-
-        % Using equation (3) compute the mean squared error on both the training
-        % and test sets.
-        mean_square_error_train(idx,i) = 1/l_train*((Xtr*wtr_est-y_train)'*(Xtr*wtr_est-y_train));
-        mean_square_error_test(idx,i) = 1/l_train*((Xte*wtr_est-y_test)'*(Xte*wtr_est-y_test)); %Mean square error for the test data is way higher
-    end
-    
-%     fprintf('gamma = %d\n',gamma);
-%     disp('train:')
-%     disp('    data100  data10')
-%     disp(mean_square_error_train)
-%     disp('test:')
-%     disp('    data100  data10')
-%     disp(mean_square_error_test)
-    
+        %Size 100 training and 10 size training; Size 500 test;
+        [mse_train_100(i,idx), mse_test_100(i,idx)] = get_mean_square_error(100, 500, gamma);
+        [mse_train_10(i,idx), mse_test_10(i,idx)] = get_mean_square_error(10, 500, gamma);  
+%         fprintf('mse_train = %d mse_test = %d\n',mse_train_100(i,idx),mse_test_100(i,idx));
+    end   
 end
 
 % plotting graphs
 figure
 j  = -6 : 3;
 % initialize multiple variables to speed up things
-[mse_train_100,mse_test_100,mse_train_10,mse_test_10] = deal(zeros(1,numel(j)));
 for idx = 1:numel(j)
     gamma(idx)=log(10^j(idx));
-    mse_train_100(idx)=mean_square_error_train(idx,1);     
-    mse_test_100(idx)=mean_square_error_test(idx,1);
-    mse_train_10(idx)=mean_square_error_train(idx,2);
-    mse_test_10(idx)=mean_square_error_test(idx,2);
-%     fprintf('gamma = %d\n',gamma);
-%     fprintf('mse_train_100 = %d\n',mse_train_100);
-%     fprintf('mse_test_100 = %d\n',mse_test_100);
 end
 % a)
-semilogx(gamma, mse_train_100, 'r',gamma, mse_test_100, 'b')
+% semilogx(gamma, mse_train_100(1,:),'r',gamma, mse_test_100(1,:), 'b')
 % b)
-% semilogx(gamma, mse_train_10, 'r',gamma, mse_test_10, 'b')
+% semilogx(gamma, mse_train_10(1,:), 'r',gamma, mse_test_10(1,:), 'b')
+% c)
+% average erros accross 200 iterations
+mse_train_100_avr = mean(mse_train_100(:,:),1); %# average along dim 1, i.e. average all rows
+mse_test_100_avr = mean(mse_test_100(:,:),1); %# average along dim 1, i.e. average all rows
+mse_train_10_avr = mean(mse_train_10(:,:),1); %# average along dim 1, i.e. average all rows
+mse_test_10_avr = mean(mse_test_10(:,:),1); %# average along dim 1, i.e. average all rows
+% disp(mse_train_100_avr) % display to test
+% semilogx(gamma, mse_train_100_avr, 'r',gamma, mse_test_100_avr, 'b')
+semilogx(gamma, mse_train_10_avr, 'r',gamma, mse_test_10_avr, 'b')
 
 grid on
 title('Question 4')
