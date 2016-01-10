@@ -10,7 +10,7 @@ function [ mse_train, mse_valid, mse_test] = get_mean_square_error_with_split( i
     w_train=randn(d,1); % weighted vector= random weight vector w ? R10 
     y_train=Xtr*w_train+n_train; %Calculate gamma for training data  
     l_train=i_new_train_size; 
-    wtr_est = (Xtr'*Xtr + gamma*I) \ Xtr'*y_train;
+    wtr_est = (Xtr'*Xtr + gamma*l_train*I) \ Xtr'*y_train;
     mse_train = 1/l_train*((Xtr*wtr_est-y_train)'*(Xtr*wtr_est-y_train)); 
     
     mse_valid = get_mse(i_valid_size, d, wtr_est);

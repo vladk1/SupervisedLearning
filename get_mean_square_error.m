@@ -18,7 +18,7 @@ function [mse_train, mse_test] = get_mean_square_error(i_train_size, i_test_size
     l_test=i_test_size;
 %     fprintf('l_train = %d l_test = %d\n',l_train,l_test);
 
-    wtr_est = (Xtr'*Xtr + gamma*I) \ Xtr'*y_train;
+    wtr_est = (Xtr'*Xtr + gamma*l_train*I) \ Xtr'*y_train;
     
     % Using equation (3) compute the mean squared error on both the training
     % and test sets.
