@@ -6,9 +6,9 @@ clc
 % Plot the training and test set errors as a function of ? (use a log scale for the ? axis).
 d = 10; %Dimension
 I = eye(d); % Identity matrix
-max_iteration_size = 2;
+max_iteration_size = 200;
 [mean_square_error_train, mean_square_error_test] = deal(zeros(1,max_iteration_size));
-j  = -6 : 3;
+j  = -6 : 3; % from 10^?6 up to 10^3
 for idx = 1:numel(j)
     gamma=10^j(idx);
     for i=1:max_iteration_size
