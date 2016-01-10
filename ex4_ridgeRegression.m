@@ -25,7 +25,7 @@ end
 figure
 % initialize multiple variables to speed up things
 for idx = 1:numel(j)
-    gamma(idx)=log(10^j(idx));
+    gamma(idx)=10^j(idx);
 end
 % a)
 % semilogx(gamma, mse_train_100(1,:),'r',gamma, mse_test_100(1,:), 'b')
@@ -38,8 +38,8 @@ mse_test_100_avr = mean(mse_test_100(:,:),1); %# average along dim 1, i.e. avera
 mse_train_10_avr = mean(mse_train_10(:,:),1); %# average along dim 1, i.e. average all rows
 mse_test_10_avr = mean(mse_test_10(:,:),1); %# average along dim 1, i.e. average all rows
 % disp(mse_train_100_avr) % display to test
-% semilogx(gamma, mse_train_100_avr, 'r',gamma, mse_test_100_avr, 'b')
-semilogx(gamma, mse_train_10_avr, 'r',gamma, mse_test_10_avr, 'b')
+  semilogx(gamma, mse_train_100_avr, 'r',gamma, mse_test_100_avr, 'b')
+%  semilogx(gamma, mse_train_10_avr, 'r',gamma, mse_test_10_avr, 'b')
 
 grid on
 title('Question 4')
