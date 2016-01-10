@@ -5,7 +5,6 @@ clc
 % What are the training and test mean squared errors? 
 % Plot the training and test set errors as a function of ? (use a log scale for the ? axis).
 
-d = 10; %Dimension
 max_iteration_size = 200;
 j  = -6 : 3; % from 10^?6 up to 10^3
 
@@ -24,7 +23,6 @@ end
 
 % plotting graphs
 figure
-j  = -6 : 3;
 % initialize multiple variables to speed up things
 for idx = 1:numel(j)
     gamma(idx)=log(10^j(idx));
