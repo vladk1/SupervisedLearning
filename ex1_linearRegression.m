@@ -22,8 +22,8 @@ lte=ite;
 % Note that in the special case where xi ? R is one-dimensional, X is a column vector, and X?X is a scalar then w will also be a scalar.
 %wtr_est = mldivide(Xtr',Xtr)*Xtr'*ytr;  %Estimate w based on the training set.
 
-% Need to use mldivide - but didn't make it to work!! 
-wtr_est = inv(Xtr'*Xtr)*Xtr'*ytr;  %Estimate w based on the training set.
+ 
+wtr_est = (Xtr'*Xtr)\Xtr'*ytr;  %Estimate w based on the training set.
 
 % Using equation (3) compute the mean squared error on both the training and test sets.
 mean_square_error_tr(i)=1/ltr*((Xtr*wtr_est-ytr)'*(Xtr*wtr_est-ytr));
@@ -55,11 +55,8 @@ yte=Xte*wte+nte; %Calculate y for training data
 ltr=itr(i);
 lte=ite;
 % b
-% Note that in the special case where xi ? R is one-dimensional, X is a column vector, and X?X is a scalar then w will also be a scalar.
-%wtr_est = mldivide(Xtr',Xtr)*Xtr'*ytr;  %Estimate w based on the training set.
 
-% Need to use mldivide - but didn't make it to work!! 
-wtr_est = inv(Xtr'*Xtr)*Xtr'*ytr;  %Estimate w based on the training set.
+wtr_est = (Xtr'*Xtr)\Xtr'*ytr;  %Estimate w based on the training set.
 
 % Using equation (3) compute the mean squared error on both the training and test sets.
 mean_square_error_tr(ii)=1/ltr*((Xtr*wtr_est-ytr)'*(Xtr*wtr_est-ytr));
