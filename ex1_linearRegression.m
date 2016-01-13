@@ -1,70 +1,56 @@
 % Least squares regression LSR
-%a 
+%a
 clear all
 clc
-% te is test set
-% tr is training set
 d=1; %Dimension
-for i=1:2
-itr=[100,10];  %Size 100 training and 10 size training 
-ite=500;  %Size 500 test 
-Xte=randn(ite,1);   %X is drawn from the standard normal distribution.
-Xtr=randn(itr(i),1);   %X is drawn from the standard normal distribution.
-nte=randn(ite,1);   %n is drawn from the standard normal distribution.
-ntr=randn(itr(i),1);   %n is drawn from the standard normal distribution.
-wte=randn(d,1); % weighted vector which is random value where w is element in Real number, one dimensional
-wtr=randn(d,1); % weighted vector which is random value where w is element in Real number, one dimensional
-ytr=Xtr*wtr+ntr; %Calculate y for training data
-yte=Xte*wte+nte; %Calculate y for training data 
-ltr=itr(i);
-lte=ite;
-% b
-% Note that in the special case where xi ? R is one-dimensional, X is a column vector, and X?X is a scalar then w will also be a scalar.
-%wtr_est = mldivide(Xtr',Xtr)*Xtr'*ytr;  %Estimate w based on the training set.
 
- 
-wtr_est = (Xtr'*Xtr)\Xtr'*ytr;  %Estimate w based on the training set.
+       [X_600, y_600]= generate_data(600, d);
+        X_test = X_600(1:501,:);
+        y_test = y_600(1:501,:);
+        X_train_100 = X_600(501:600,:);
+        y_train_100 = y_600(501:600,:);
+        X_train_10 = X_600(501:510,:);
+        y_train_10 = y_600(501:510,:);
 
-% Using equation (3) compute the mean squared error on both the training and test sets.
-mean_square_error_tr(i)=1/ltr*((Xtr*wtr_est-ytr)'*(Xtr*wtr_est-ytr));
-mean_square_error_te(i) = 1/ltr*((Xte*wtr_est-yte)'*(Xte*wtr_est-yte)); %Mean square error for the test data is way higher
+% b) Note that in the special case where x_i is in R is one-dimensional, X
+% is a column vector, and X'X is a scalar then w will also be a scalar.
+wtr_est_100 = (X_train_100'*X_train_100) \ X_train_100'*y_train_100;  %Estimate w based on the training set.
+wtr_est_10 = (X_train_10'*X_train_10) \ X_train_10'*y_train_10; 
+% Using equation (3) compute the mean squared error on both the training
+% and test sets.
 
+mean_square_error_train_100= MSEfunction(100, X_train_100, wtr_est_100,y_train_100)
+mean_square_error_test_100= MSEfunction(500, X_test, wtr_est_100,y_test)
+mean_square_error_train_10= MSEfunction(10, X_train_10, wtr_est_10,y_train_10)
+mean_square_error_test_10= MSEfunction(500, X_test, wtr_est_10,y_test)
 
-end
-mean_square_error_te
-mean_square_error_tr
-%%
-mean_square_error_tr=[];
-mean_square_error_te=[];
-
-% d
-for i=1:2
+%% d
+clear all
+d=1; %Dimension
 for ii=1:200
-    d=1; %Dimension
+       [X_600, y_600]= generate_data(600, d);
+        X_test = X_600(1:501,:);
+        y_test = y_600(1:501,:);
+        X_train_100 = X_600(501:600,:);
+        y_train_100 = y_600(501:600,:);
+        X_train_10 = X_600(501:510,:);
+        y_train_10 = y_600(501:510,:);
 
-itr=[100,10];  %Size 100 training and 10 size training 
-ite=500;  %Size 500 test 
-Xte=randn(ite,d);   %X is drawn from the standard normal distribution.
-Xtr=randn(itr(i),d);   %X is drawn from the standard normal distribution.
-nte=randn(ite,1);   %n is drawn from the standard normal distribution.
-ntr=randn(itr(i),1);   %n is drawn from the standard normal distribution.
-wte=randn(d,1); % weighted vector which is random value where w is element in Real number, one dimensional
-wtr=randn(d,1); % weighted vector which is random value where w is element in Real number, one dimensional
-ytr=Xtr*wtr+ntr; %Calculate y for training data
-yte=Xte*wte+nte; %Calculate y for training data 
-ltr=itr(i);
-lte=ite;
-% b
+% b) Note that in the special case where x_i is in R is one-dimensional, X
+% is a column vector, and X'X is a scalar then w will also be a scalar.
+wtr_est_100 = (X_train_100'*X_train_100) \ X_train_100'*y_train_100;  %Estimate w based on the training set.
+wtr_est_10 = (X_train_10'*X_train_10) \ X_train_10'*y_train_10; 
+% Using equation (3) compute the mean squared error on both the training
+% and test sets.
 
-wtr_est = (Xtr'*Xtr)\Xtr'*ytr;  %Estimate w based on the training set.
-
-% Using equation (3) compute the mean squared error on both the training and test sets.
-mean_square_error_tr(ii)=1/ltr*((Xtr*wtr_est-ytr)'*(Xtr*wtr_est-ytr));
-mean_square_error_te(ii) = 1/ltr*((Xte*wtr_est-yte)'*(Xte*wtr_est-yte)); %Mean square error for the test data is way higher
-end
-mean_square_error_tr_200Sampling(i)=mean(mean_square_error_tr);
-mean_square_error_te_200Sampling(i)=mean(mean_square_error_te) ;    
+mean_square_error_train_100(ii)= MSEfunction(100, X_train_100, wtr_est_100,y_train_100);
+mean_square_error_test_100(ii)= MSEfunction(500, X_test, wtr_est_100,y_test);
+mean_square_error_train_10(ii)= MSEfunction(10, X_train_10, wtr_est_10,y_train_10);
+mean_square_error_test_10(ii)= MSEfunction(500, X_test, wtr_est_10,y_test);
 end
 
-mean_square_error_200Sampling_100data_10data=[mean_square_error_tr_200Sampling;mean_square_error_te_200Sampling]
 
+mean_square_error_train_100_200sampling=mean(mean_square_error_train_100)
+mean_square_error_test_100_200sampling=mean(mean_square_error_test_100)
+mean_square_error_train_10_200sampling=mean(mean_square_error_train_10)
+mean_square_error_test_10_200Sampling=mean(mean_square_error_test_10)
