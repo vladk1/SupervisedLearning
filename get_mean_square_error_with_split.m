@@ -13,7 +13,7 @@ function [ mse_train, mse_valid, mse_test] = get_mean_square_error_with_split( X
 %     fprintf('size(X_train, 1)=%d size(X_valid, 1)=%d size(y_train, 1)=%d size(y_valid, 1)=%d\n',size(X_train, 1),size(X_valid, 1),size(y_train, 1), size(y_valid, 1));
        
     dim = size(X_train, 2);
-    wtr_est = ((X_train' * X_train) + (gamma*len_train*eye(dim))) \ (X_train'*y_train);
+    wtr_est = ((X_train' * X_train) + (gamma*len_train*eye(dim))) \ (X_train'*y_train); 
  
     mse_train = get_mse(X_train, y_train, wtr_est, len_train);
     mse_valid = get_mse(X_valid, y_valid, wtr_est, len_valid);

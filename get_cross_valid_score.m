@@ -27,7 +27,7 @@ function [ mse_train, mse_valid, mse_test] = get_cross_valid_score( X_train, y_t
 %         fprintf('size(X_train_i,1)=%d\n',size(X_train_i,1));
         l_train_i = l_train - l_valid;
         
-        wtr_est_i = ((X_train_i' * X_train_i) + (gamma*l_train_i*I)) \ (X_train_i'*y_train_i);
+        wtr_est_i = ((X_train_i' * X_train_i) + (gamma*l_train_i*I)) \ (X_train_i'*y_train_i); 
        
         mse_valid_i(i) = get_mse(X_valid, y_valid, l_valid, wtr_est_i); 
         mse_train_i(i) = get_mse(X_train, y_train, l_train, wtr_est_i); 

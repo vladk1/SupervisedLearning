@@ -17,6 +17,7 @@ for idx = 1:numel(j)
         X_train_100 = X_600(501:600,:);
         y_train_100 = y_600(501:600,:);
         [mse_train_100_avr(i), mse_valid_100_avr(i), mse_test_100_avr(i)] = get_cross_valid_score(X_train_100,y_train_100,X_test,y_test,gamma(idx)); 
+        
         X_train_10 = X_600(501:510,:);
         y_train_10 = y_600(501:510,:);
         [mse_train_10_avr(i), mse_valid_10_avr(i), mse_test_10_avr(i)] = get_cross_valid_score(X_train_10,y_train_10,X_test,y_test,gamma(idx)); 

@@ -1,6 +1,6 @@
 clear all
 clc
-dim = 10;
+dim = 1;
 max_iteration_size = 200;
 j  = -6 : 3; % from 10^?6 up to 10^3
 % j = 10^-6 : 10^3; % for longer iterations
@@ -19,9 +19,10 @@ for idx = 1:numel(j)
         y_test = y_600(1:500,:);
         X_train_100 = X_600(501:600,:);
         y_train_100 = y_600(501:600,:);
+        [mse_train_100(i,idx), mse_valid_100(i,idx), mse_test_100(i,idx)] = get_mean_square_error_with_split(X_train_100,y_train_100,X_test,y_test,gamma(idx),0.8,0.2);
+        
         X_train_10 = X_600(501:510,:);
         y_train_10 = y_600(501:510,:);
-        [mse_train_100(i,idx), mse_valid_100(i,idx), mse_test_100(i,idx)] = get_mean_square_error_with_split(X_train_100,y_train_100,X_test,y_test,gamma(idx),0.8,0.2);
         [mse_train_10(i,idx), mse_valid_10(i,idx), mse_test_10(i,idx)] = get_mean_square_error_with_split(X_train_10,y_train_10,X_test,y_test,gamma(idx),0.8,0.2);
     end   
 end
@@ -52,27 +53,27 @@ mse_valid_10_avr =  mean(mse_valid_10);
 [min_valid_error_10,min_valid_error_index_10] = min(mse_valid_10_avr);
 min_gamma_10 = gamma(min_valid_error_index_10);
 fprintf('10: min_gamma=%d min_valid_error=%d\n',min_gamma_10,min_valid_error_10);
-mse_test_10_avr = mean(mse_test_10); 
-semilogx(gamma, mse_train_10_avr, '--r', gamma, mse_valid_10_avr, 'b', gamma, mse_test_10_avr, 'g')
-legend({'--r','g','b'}, {'training data set (8 samples)','validation data set (2 samples)','test data set (500 samples)'})
-title('Question 5.b) Plot of the validation error, together with training and test error 200 iterations')
-xlabel('log scale of the regularization parameter')
-ylabel('mean square error')
-grid on
+% mse_test_10_avr = mean(mse_test_10); 
+% semilogx(gamma, mse_train_10_avr, '--r', gamma, mse_valid_10_avr, 'b', gamma, mse_test_10_avr, 'g')
+% legend({'--r','g','b'}, {'training data set (8 samples)','validation data set (2 samples)','test data set (500 samples)'})
+% title('Question 5.b) Plot of the validation error, together with training and test error 200 iterations')
+% xlabel('log scale of the regularization parameter')
+% ylabel('mean square error')
+% grid on
 
 % c) 
 % average min gamma accross iterations
-% for i=1:max_iteration_size
-%     mse_valid_10_iter = mse_valid_10(i,:);
-%     [min_valid_error_iter_10, min_valid_error_iter_10_index] = min(mse_valid_10_iter);
-%     gamma_10(i) = gamma(min_valid_error_iter_10_index);
+for i=1:max_iteration_size
+    mse_valid_10_iter = mse_valid_10(i,:);
+    [min_valid_error_iter_10, min_valid_error_iter_10_index] = min(mse_valid_10_iter);
+    gamma_10(i) = gamma(min_valid_error_iter_10_index);
 %     
-%     mse_valid_100_iter = mse_valid_100(i,:);
-%     [min_valid_error_iter_100, min_valid_error_iter_100_index] = min(mse_valid_100_iter);
-%     gamma_100(i) = gamma(min_valid_error_iter_100_index);
-% end
-% gamma_10_avr = mean(gamma_10);
-% gamma_100_avr = mean(gamma_100);
-% fprintf('gamma_10_avr=%d\ngamma_100_avr=%d\n',gamma_10_avr,gamma_100_avr);
+    mse_valid_100_iter = mse_valid_100(i,:);
+    [min_valid_error_iter_100, min_valid_error_iter_100_index] = min(mse_valid_100_iter);
+    gamma_100(i) = gamma(min_valid_error_iter_100_index);
+end
+gamma_10_avr = mean(gamma_10);
+gamma_100_avr = mean(gamma_100);
+fprintf('gamma_10_avr=%d\ngamma_100_avr=%d\n',gamma_10_avr,gamma_100_avr);
 
 

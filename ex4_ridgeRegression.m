@@ -19,10 +19,10 @@ for idx = 1:numel(j)
         y_test = y_600(1:500,:);
         X_train_100 = X_600(501:600,:);
         y_train_100 = y_600(501:600,:);
+        [mse_train_100(i,idx), mse_test_100(i,idx)] = get_mean_square_error(X_train_100,y_train_100,X_test,y_test,gamma(idx));
+        
         X_train_10 = X_600(501:510,:);
         y_train_10 = y_600(501:510,:);
-        
-        [mse_train_100(i,idx), mse_test_100(i,idx)] = get_mean_square_error(X_train_100,y_train_100,X_test,y_test,gamma(idx));
         [mse_train_10(i,idx), mse_test_10(i,idx)] = get_mean_square_error(X_train_10,y_train_10,X_test,y_test,gamma(idx));  
 %         fprintf('gamma=%d mse_train=%d mse_test=%d\n',gamma(idx), mse_train_100(i,idx),mse_test_100(i,idx));
     end   
@@ -52,7 +52,7 @@ figure
 % average erros accross 200 iterations
 % disp(mse_train_100_avr)
 % disp(mse_test_100_avr) 
-% semilogx(gamma, mean(mse_train_100), 'r',gamma, mean(mse_test_100), 'b')
+semilogx(gamma, mean(mse_train_100), 'r',gamma, mean(mse_test_100), 'b')
 % title('Question 4.c) Averaged (200 runs) MSE for training data (100 samples) and test data sets')
 % xlabel('log scale of the regularization parameter')
 % ylabel('mean square error')
