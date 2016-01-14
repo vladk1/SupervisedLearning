@@ -20,7 +20,7 @@ for i = 1:numel(j)
         BostonArrayRand=bostonArray(randperm(sizeBoston),:);
 
         K = get_kernel(BostonArrayRand, sigma);
-        
+        fprintf('size(K,1)=%d\n',size(K,1));
         
 %         K_train = get_kernel(TestBoston, TrainingBoston, sigma);
 %         K_test = get_kernel(TestBoston, TestBoston, sigma);
