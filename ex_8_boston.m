@@ -1,7 +1,6 @@
 clc
 clear all
 % Boston housing kernels
-% look into more details http://www.cs.toronto.edu/~delve/data/boston/bostonDetail.html
 boston_table=load('boston.mat');
 
 bostonArray=boston_table.boston;
@@ -16,15 +15,13 @@ B_ex2=[];mse_train_ex2=[];mse_test_ex2=[];
 %Inital variables in example 3
 B_ex3=[];mse_train_ex3=[];mse_test_ex3=[];
 
-for i_runs=1:20
-    
+for i_runs=1:20  
 sizeBoston=size(bostonArray,1);
 BostonArrayRand=bostonArray(randperm(sizeBoston),:);
 TestBoston=BostonArrayRand(1:floor(sizeBoston*2/3),:);
 TrainingBoston=BostonArrayRand(floor(sizeBoston*2/3):sizeBoston,:);
 sizeTraining=size(TrainingBoston,1);
 sizeTest=size(TestBoston,1);
-
 
 % Create a vector of ones that is the same length as the training set using the function ones. 
 onesTest=ones(sizeTest,1);
@@ -58,10 +55,6 @@ mse_train_ex2(i_runs,i)=MSEfunction(sizeTraining, x_train, B_ex2(i,:)', y_train)
 mse_test_ex2(i_runs,i)=MSEfunction(sizeTest,  x_test, B_ex2(i,:)', y_test);
 end
 
-% mse_train_ex2
-% mse_test_ex2
-
-  
 % Linear Regression using all attributes. Now we would like to perform
 % linear regression using all of the data attributes at once. Perform
 % linear regression on the training set using this regressor, and
@@ -75,20 +68,39 @@ B_ex3(:,i_runs)=x_train_ex3\y_train; %Linear regression with single attribute an
 mse_train_ex3(i_runs)=MSEfunction(sizeTraining, x_train_ex3, B_ex3(:,i_runs), y_train);
 mse_test_ex3(i_runs)=MSEfunction(sizeTest,  x_test_ex3, B_ex3(:,i_runs), y_test);
 
-
 end
 
 %Ex 1
 avg_Btrain_ex1=mean(bTraining_ex1)
-avg_mse_train_ex1=mean(mse_train_ex1)
-avg_mse_train_ex1=mean(mse_test_ex1)
+avg_mse_train_ex1=mean(mse_train_ex1);
+std_mse_train_ex1=std(mse_train_ex1);
+avg_mse_test_ex1=mean(mse_test_ex1);
+std_mse_test_ex1=std(mse_test_ex1);
+
 
 %Ex 2
-avg_mse_train_ex2=mean(mse_train_ex2)
-avg_mse_test_ex2=mean(mse_test_ex2)
+avg_mse_train_ex2=mean(mse_train_ex2);
+std_mse_train_ex2=std(mse_train_ex2);
+avg_mse_test_ex2=mean(mse_test_ex2);
+std_mse_test_ex2=std(mse_test_ex2);
+
 
 %Ex 3
 avg_Btrain_ex3=mean(B_ex3,2)
-avg_mse_train_ex3=mean(mse_train_ex3)
-avg_mse_test_ex3=mean(mse_test_ex3)
+avg_mse_train_ex3=mean(mse_train_ex3);
+std_mse_train_ex3=std(mse_train_ex3);
+avg_mse_test_ex3=mean(mse_test_ex3);
+std_mse_test_ex3=std(mse_test_ex3);
+
+
+% Put it to table format
+ avg_std_mse_train_ex1=[avg_mse_train_ex1,std_mse_train_ex1]
+avg_std_mse_test_ex1=  [avg_mse_test_ex1,std_mse_test_ex1]
+% 
+avg_std_mse_train_ex2=[avg_mse_train_ex2',std_mse_train_ex2']
+avg_std_mse_test_ex2= [avg_mse_test_ex2', std_mse_test_ex2']
+% 
+ avg_std_mse_test_ex2=[avg_mse_train_ex3,std_mse_train_ex3]
+ avg_std_mse_test_ex3=[avg_mse_test_ex3,std_mse_test_ex3]
+
 
