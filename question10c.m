@@ -8,8 +8,7 @@ bostonArray=boston_table.boston;
 
 
 j  = -40 : -26; % gamma from 10^-6 up to 10^3
-jj = 7 : 13; % sigma from 10^7 to 10^13
-
+jj = 7.0:.5:13.0; % sigma from 10^7, 10^7.5 to 10^13
 for i = 1:numel(j)
     gamma(i) = 10^j(i);
     
@@ -27,7 +26,7 @@ for i = 1:numel(j)
         K_test = K(train_size+1:kernel_size, 1:train_size);
         
 %         fprintf('K_train=%dx%d K_test=%dx%d\n',size(K_train,1), size(K_train,2), size(K_test,1), size(K_test,2));
-        [mse_train(i, ii), mse_valid(i, ii), mse_test(i, ii)] = get_cross_valid_score(K_train, gamma(idx)); 
+        [mse_train(i, ii), mse_valid(i, ii), mse_test(i, ii)] = get_cross_valid_score(K_train, gamma(i)); 
         
          
 %          dual_w = kridgereg(K,y,gamma);  
