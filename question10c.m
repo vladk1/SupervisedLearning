@@ -40,7 +40,7 @@ for epoch = 1:1
     end
 end
 
-% mse_train = mean(mse_train_epoch);
+mse_train = squeeze(mean(mse_train_epoch,1));
 
 mse_valid = squeeze(mean(mse_valid_epoch,1));
 fprintf('size(mse_valid) %dx%dx%d\n', size(mse_valid,1),size(mse_valid,2),size(mse_valid,3));
