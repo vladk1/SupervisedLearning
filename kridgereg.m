@@ -3,6 +3,6 @@ function [ dual_w ] = kridgereg( K, y, gamma )
 %  Takes in kernel matrix, y and gamma.
 dim = size(K,2);
 len = size(K,1);
-dual_w = (K + gamma * len * eye(len)) \ y;
+dual_w = (K + gamma * size(K,1) * eye(size(K,1))) \ y;
 end
 

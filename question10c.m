@@ -4,41 +4,46 @@ clear all
 % look into more details http://www.cs.toronto.edu/~delve/data/boston/bostonDetail.html
 boston_table=load('boston.mat');
 
+
 j  = -40 : -26; % gamma from 10^-40 up to 10^-26   -40 : -39;%
 jj = 7.0:.5:13.0; % sigma from 10^7, 10^7.5 to 10^13   7.0:.5:8.0;%
 
+for epoch = 1:1
+    bostonArray=boston_table.boston;
+    sizeBoston=size(bostonArray,1);
+    BostonArrayRand=bostonArray(randperm(sizeBoston),:); % 506x14
+    X = BostonArrayRand(:, 1:13); % 506x13
+    X_size = size(X,1);
+    y = BostonArrayRand(:, 14); % 506
 
-bostonArray=boston_table.boston;
-sizeBoston=size(bostonArray,1);
-BostonArrayRand=bostonArray(randperm(sizeBoston),:); % 506x14
-X = BostonArrayRand(:, 1:13); % 506x13
-X_size = size(X,1);
-y = BostonArrayRand(:, 14); % 506
+    for i = 1:numel(j)
+        gamma(i) = 2^j(i);    
+        for ii = 1:numel(jj)
+            sigma(ii) = 2^jj(ii);  
+            
+            K = get_kernel(X, sigma(ii));
+   
+            train_size = floor(X_size*2/3);
+            K_train = K(1:train_size, 1:train_size); % 337x337
+            y_train = y(1:train_size);
+            K_test = K(train_size+1:X_size, 1:train_size); % 169x337
+            y_test = y(train_size+1:X_size);
 
-for i = 1:numel(j)
-    gamma(i) = 10^j(i);    
-    for ii = 1:numel(jj)
-        sigma(ii) = 10^jj(ii);      
-        
-        K = get_kernel(X, sigma(ii));
-%         dim 
-%         fprintf('K=%dx%d\n',size(K,1),size(K,2));
-        
-        train_size = floor(X_size*2/3);
-        K_train = K(1:train_size, 1:train_size); % 337x337
-        y_train = y(1:train_size);
-        K_test = K(train_size+1:X_size, 1:train_size); % 169x337
-        y_test = y(train_size+1:X_size);
-        
-%         dim  
-%         fprintf('BostonArrayRand=%dx%d\n',size(X,1),size(X, 2));
-%         fprintf('K_train=%dx%d K_test=%dx%d\n',size(K_train,1), size(K_train,2), size(K_test,1), size(K_test,2));
-%         fprintf('y_train size=%d\n', size(y_train,1))
-%         fprintf('y_test size=%d\n', size(y_test,1))
-        
-        [mse_train(i, ii), mse_valid(i, ii)] = get_kernel_cross_valid_score(K_train, y_train, gamma(i));                     
+    %         dim  
+    %         fprintf('BostonArrayRand=%dx%d\n',size(X,1),size(X, 2));
+    %         fprintf('K_train=%dx%d K_test=%dx%d\n',size(K_train,1), size(K_train,2), size(K_test,1), size(K_test,2));
+    %         fprintf('y_train size=%d\n', size(y_train,1))
+    %         fprintf('y_test size=%d\n', size(y_test,1))
+
+            [mse_train_epoch(epoch, i, ii), mse_valid_epoch(epoch, i, ii)] = get_kernel_cross_valid_score(K_train, y_train, gamma(i));                     
+        end
     end
 end
+
+% mse_train = mean(mse_train_epoch);
+
+mse_valid = squeeze(mean(mse_valid_epoch,1));
+fprintf('size(mse_valid) %dx%dx%d\n', size(mse_valid,1),size(mse_valid,2),size(mse_valid,3));
 
 disp(mse_valid)
 [min_value, min_index] = min(mse_valid(:));
