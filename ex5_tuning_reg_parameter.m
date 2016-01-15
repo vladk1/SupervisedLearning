@@ -64,7 +64,7 @@ for i=1:max_iteration_size
     mse_valid_10_iter = mse_valid_10(i,:);
     [min_valid_error_iter_10, min_valid_error_iter_10_index] = min(mse_valid_10_iter);
     gamma_10(i) = gamma(min_valid_error_iter_10_index);
-%     
+     
     mse_valid_100_iter = mse_valid_100(i,:);
     [min_valid_error_iter_100, min_valid_error_iter_100_index] = min(mse_valid_100_iter);
     gamma_100(i) = gamma(min_valid_error_iter_100_index);
