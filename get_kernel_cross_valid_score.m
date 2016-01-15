@@ -1,9 +1,9 @@
 function [ mean_mse_train, mean_mse_valid ] = get_kernel_cross_valid_score(K, y, gamma )
-
-    k = 5; % 5 cross validation
+    % 5 cross validation
+    k = 5; 
     l_train = size(K, 1);  
     k_size = floor(l_train / k);
-        
+     
     for i = 1:k
         a = k_size*(i-1)+1; 
         b = i*k_size;
@@ -17,13 +17,6 @@ function [ mean_mse_train, mean_mse_valid ] = get_kernel_cross_valid_score(K, y,
         
         mse_train(i) = dualcost(K_train, y_train, dual_w);          
         mse_valid(i) = dualcost(K_valid, y_valid, dual_w);
-        
-%         fprintf('k_size=%d\n',k_size)
-%         fprintf('dual_w %d\n', size(dual_w,1))
-%         fprintf('K_train %dx%d\n', size(K_train,1), size(K_train,2))
-%         fprintf('y_train %d\n', size(y_train,1))
-%         fprintf('K_valid %dx%d\n', size(K_valid,1), size(K_valid,2))
-%         fprintf('y_valid %d\n', size(y_valid,1))
     end
     mean_mse_train = mean(mse_train);
     mean_mse_valid = mean(mse_valid);
