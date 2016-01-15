@@ -94,13 +94,13 @@ std_mse_test_ex3=std(mse_test_ex3);
 
 
 % Put it to table format
- avg_std_mse_train_ex1=[avg_mse_train_ex1,std_mse_train_ex1]
-avg_std_mse_test_ex1=  [avg_mse_test_ex1,std_mse_test_ex1]
+avg_std_mse_train_ex1=[avg_mse_train_ex1,std_mse_train_ex1]
+avg_std_mse_test_ex1=[avg_mse_test_ex1,std_mse_test_ex1]
 % 
 avg_std_mse_train_ex2=[avg_mse_train_ex2',std_mse_train_ex2']
-avg_std_mse_test_ex2= [avg_mse_test_ex2', std_mse_test_ex2']
+avg_std_mse_test_ex2=[avg_mse_test_ex2', std_mse_test_ex2']
 % 
- avg_std_mse_test_ex2=[avg_mse_train_ex3,std_mse_train_ex3]
- avg_std_mse_test_ex3=[avg_mse_test_ex3,std_mse_test_ex3]
+avg_std_mse_test_ex2=[avg_mse_train_ex3,std_mse_train_ex3]
+avg_std_mse_test_ex3=[avg_mse_test_ex3,std_mse_test_ex3]
 
 
