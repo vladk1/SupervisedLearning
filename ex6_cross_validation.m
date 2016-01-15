@@ -5,8 +5,6 @@ clc
 dim = 10;
 max_iteration_size = 200;
 j  = -6 : 3; % from 10^?6 up to 10^3
-% j = 10^-6 : 10^3; % for longer iterations
-% initialize things:
 
 for idx = 1:numel(j)
     gamma(idx)=10^j(idx);
@@ -30,17 +28,16 @@ for idx = 1:numel(j)
     mse_test_10(idx) = mean(mse_test_10_avr);
 end
 % plotting graphs
+% a)
 figure
+semilogx(gamma, mse_train_100, 'r', gamma, mse_valid_100, 'g', gamma, mse_test_100, 'b')
+legend({'--r','g','b'}, {'training data set (80 samples)','validation data set (20 samples)','test data set (500 samples)'})
+xlabel('log scale of the regularization parameter')
+ylabel('mean square error')
+grid on
 
-% disp(gamma)
-% a
-% semilogx(gamma, mse_train_100, 'r', gamma, mse_valid_100, 'g', gamma, mse_test_100, 'b')
-% legend({'--r','g','b'}, {'training data set (80 samples)','validation data set (20 samples)','test data set (500 samples)'})
-% xlabel('log scale of the regularization parameter')
-% ylabel('mean square error')
-% grid on
-
-% b
+% b)
+figure
 semilogx(gamma, mse_train_10, '--r', gamma, mse_valid_10, 'g', gamma, mse_test_10, 'b')
 legend({'--r','g','b'}, {'training data set (8 samples)','validation data set (2 samples)','test data set (500 samples)'})
 xlabel('log scale of the regularization parameter')
