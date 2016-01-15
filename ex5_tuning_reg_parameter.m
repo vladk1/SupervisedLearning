@@ -1,10 +1,9 @@
 clear all
 clc
-dim = 1;
+dim = 10;
 max_iteration_size = 200;
-j  = -6 : 3; % from 10^?6 up to 10^3
-% j = 10^-6 : 10^3; % for longer iterations
-% disp(numel(j))
+j  = -6 : 3; % from 10^6 up to 10^3
+
 % initialize things:
 [mse_test_100, mse_test_10] = deal(zeros(max_iteration_size, numel(j)));
 [mse_train_100, mse_train_10] = deal(zeros(max_iteration_size, numel(j)));
@@ -28,24 +27,21 @@ for idx = 1:numel(j)
 end
 
 % plotting graphs
-figure
-
-% disp(gamma)
-
 % min gamma accross average errors of 200 iterations
 % a)
-% mse_train_100_avr = mean(mse_train_100); %# average along dim 1, i.e. average all rows
-% mse_valid_100_avr = mean(mse_valid_100);
-% [min_valid_error,min_valid_error_index] = min(mse_valid_100_avr);
-% min_gamma = gamma(min_valid_error_index);
-% fprintf('100: min_gamma=%d min_valid_error=%d\n',min_gamma,min_valid_error);
-% mse_test_100_avr = mean(mse_test_100(:,:),1); 
-% semilogx(gamma, mse_train_100_avr, '--r', gamma, mse_valid_100_avr, 'g', gamma, mse_test_100_avr, 'b')
-% legend({'--r','g','b'}, {'training data set (80 samples)','validation data set (20 samples)','test data set (500 samples)'})
-% title('Question 5.a) Plot of the validation error, together with training and test error 200 iterations')
-% xlabel('log scale of the regularization parameter')
-% ylabel('mean square error')
-% grid on
+mse_train_100_avr = mean(mse_train_100); %# average along dim 1, i.e. average all rows
+mse_valid_100_avr = mean(mse_valid_100);
+[min_valid_error,min_valid_error_index] = min(mse_valid_100_avr);
+min_gamma = gamma(min_valid_error_index);
+fprintf('100: min_gamma=%d min_valid_error=%d\n',min_gamma,min_valid_error);
+mse_test_100_avr = mean(mse_test_100(:,:),1); 
+figure
+semilogx(gamma, mse_train_100_avr, '--r', gamma, mse_valid_100_avr, 'g', gamma, mse_test_100_avr, 'b')
+legend({'--r','g','b'}, {'training data set (80 samples)','validation data set (20 samples)','test data set (500 samples)'})
+title('Question 5.a) Plot of the validation error, together with training and test error 200 iterations')
+xlabel('log scale of the regularization parameter')
+ylabel('mean square error')
+grid on
 
 % b)
 mse_train_10_avr = mean(mse_train_10); 
@@ -53,13 +49,14 @@ mse_valid_10_avr =  mean(mse_valid_10);
 [min_valid_error_10,min_valid_error_index_10] = min(mse_valid_10_avr);
 min_gamma_10 = gamma(min_valid_error_index_10);
 fprintf('10: min_gamma=%d min_valid_error=%d\n',min_gamma_10,min_valid_error_10);
-% mse_test_10_avr = mean(mse_test_10); 
-% semilogx(gamma, mse_train_10_avr, '--r', gamma, mse_valid_10_avr, 'b', gamma, mse_test_10_avr, 'g')
-% legend({'--r','g','b'}, {'training data set (8 samples)','validation data set (2 samples)','test data set (500 samples)'})
-% title('Question 5.b) Plot of the validation error, together with training and test error 200 iterations')
-% xlabel('log scale of the regularization parameter')
-% ylabel('mean square error')
-% grid on
+mse_test_10_avr = mean(mse_test_10); 
+figure
+semilogx(gamma, mse_train_10_avr, '--r', gamma, mse_valid_10_avr, 'b', gamma, mse_test_10_avr, 'g')
+legend({'--r','g','b'}, {'training data set (8 samples)','validation data set (2 samples)','test data set (500 samples)'})
+title('Question 5.b) Plot of the validation error, together with training and test error 200 iterations')
+xlabel('log scale of the regularization parameter')
+ylabel('mean square error')
+grid on
 
 % c) 
 % average min gamma accross iterations
