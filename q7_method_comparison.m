@@ -1,12 +1,8 @@
 clear all
 clc
-% For the data set of exercise 2 part a. Plot the cross-validation score on top of the training and test
-% set errors for different values ? = {10^?6,10^?5,..,10^3} of the regularization parameter.
 dim = 10;
 max_iteration_size = 200;
-j  = -6 : 3; % from 10^?6 up to 10^3
-% j = 10^-6 : 10^3; % for longer iterations
-% initialize things:
+j  = -6 : 3; % from 10^-6 up to 10^3
 
 for idx = 1:numel(j)
     gamma(idx)=10^j(idx);
